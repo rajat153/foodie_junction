@@ -4,13 +4,9 @@
   "description": "It is Food delivery web  App",
   "homepage": "https://rajat153.github.io/foodie_junction",
   "scripts": {
-    "clean": "rm -rf build",
-    "start": "react-scripts start",
-    "build": "react-scripts start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rajat chaurasia",
   "license": "ISC",
