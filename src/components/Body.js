@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import data from "../utils/data";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [resList, setResList] = useState([]);
@@ -44,6 +45,10 @@ const Body = () => {
     );
     setfilterRestaurant(filterRes);
   };
+
+  const onlineStatus =useOnlineStatus()
+
+  if(onlineStatus === false) return( <h1>Looks Like you are not connected to internet</h1>)
 
   return resList.length == 0 ? (
     <Shimmer />

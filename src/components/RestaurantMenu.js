@@ -1,19 +1,19 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constant";
 import { useParams } from "react-router-dom";
-import { MENU_API } from "../utils/constant";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import useRestrauntMenu from "../utils/useRestrauntMenu";
 
 const RestaurantMenu = () => {
   let initialArray = Array.from({ length: 30 }, (_, index) => index === 0);
 
-  const [hotelmenu, setHotelMenu] = useState(null);
+  // const [hotelmenu, setHotelMenu] = useState(null);
   const [expanded, setExpanded] = useState(initialArray);
 
   const handleChange = (index) => (event, isExpanded) => {
@@ -24,20 +24,24 @@ const RestaurantMenu = () => {
 
   const resId = useParams();
 
-  useEffect(() => {
-    gettHotelMenu();
-  }, []);
+  const hotelmenu = useRestrauntMenu(resId)
 
-  const gettHotelMenu = async () => {
-    const getData = await fetch(
-      MENU_API + resId.resId + "&catalog_qa=undefined&submitAction=ENTER"
-    );
-    // const getData =  await fetch ("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING")
-    const response = await getData.json();
-    setHotelMenu(response.data);
-  };
+  // useEffect(() => {
+  //   gettHotelMenu();
+  // }, []);
+
+  // const gettHotelMenu = async () => {
+  //   const getData = await fetch(
+  //     MENU_API + resId.resId + "&catalog_qa=undefined&submitAction=ENTER"
+  //   );
+  //   // const getData =  await fetch ("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING")
+  //   const response = await getData.json();
+  //   setHotelMenu(response.data);
+  // };
 
   if (hotelmenu === null) return <Shimmer />;
+
+  console.log(hotelmenu)
 
   let { name, cuisines, costForTwoMessage } =
     hotelmenu?.cards[0]?.card?.card?.info;
