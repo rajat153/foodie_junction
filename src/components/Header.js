@@ -11,12 +11,12 @@ const Header = () => {
   //if dependency array is not empty  = [btnNameReact]  => useeffect will called everytime btnnumber is updated
 
   return (
-    <div className="header">
+    <div className="flex justify-between">
       <header>
-        <img src={img} alt="logo_image" className="logo" />
+        <img src={img} alt="logo_image" className="w-48 " />
       </header>
       <div className="nav-items">
-        <ul>
+        <ul className="flex p-4 m-4">
           <li>Online Status : {online ? '🟢' : '🔴'}</li>
           <li>
             <Link to="/">Home</Link>
