@@ -16,4 +16,15 @@ const RestrauntCard = (props) => {
   );
 };
 
+export const withOpenLabel = (RestrauntCard) => {
+  return(props)=>{
+    return(
+      <div>
+        <p style={{background:"black", color: "#fff", position:"absolute", paddingInline:"5px",borderRadius:'5px'}}>Veg Only</p>
+        <RestrauntCard {...props}/>
+      </div>
+    )
+  }
+}
+
 export default RestrauntCard;

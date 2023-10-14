@@ -1,4 +1,4 @@
-import RestrauntCard from "./RestrauntCard";
+import RestrauntCard,{withOpenLabel}from "./RestrauntCard";
 import { useState, useEffect } from "react";
 import data from "../utils/data";
 import Shimmer from "./Shimmer";
@@ -13,6 +13,8 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const RestrauntWithOpenLabel = withOpenLabel(RestrauntCard)
 
   //Whenever state variables update react triggers a reconcillation cycle;
   const fetchData = async () => {
@@ -89,15 +91,23 @@ const Body = () => {
             to={"/restaurant/" + item.info.id}
             className="card_link"
           >
-            <RestrauntCard
-              name={item.info.name}
-              key={index}
-              avgRating={item.info.avgRating}
-              cuisines={item.info.cuisines}
-              cloudinaryImageId={item.info.cloudinaryImageId}
-              areaName={item.info.areaName}
-              id={item.info.id}
-            />
+            {item.info.veg ? <RestrauntWithOpenLabel name={item.info.name}
+                key={index}
+                avgRating={item.info.avgRating}
+                cuisines={item.info.cuisines}
+                cloudinaryImageId={item.info.cloudinaryImageId}
+                areaName={item.info.areaName}
+                id={item.info.id}/> :
+              <RestrauntCard
+                name={item.info.name}
+                key={index}
+                avgRating={item.info.avgRating}
+                cuisines={item.info.cuisines}
+                cloudinaryImageId={item.info.cloudinaryImageId}
+                areaName={item.info.areaName}
+                id={item.info.id}
+              />
+            }
           </Link>
         ))}
       </div>

@@ -59,6 +59,8 @@ const RestaurantMenu = () => {
   return (
     <div className="restraunt_menu">
       <h1>{name}</h1>
+      <p>{costForTwoMessage}</p>
+      <span>{cuisines}</span>
       {menuItemsCategory.map((item, index) => {
         return (
           <div className="menuItem_container">
