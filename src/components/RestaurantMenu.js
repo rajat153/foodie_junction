@@ -9,6 +9,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const RestaurantMenu = () => {
   let initialArray = Array.from({ length: 30 }, (_, index) => index === 0);
@@ -56,6 +58,15 @@ const RestaurantMenu = () => {
     );
   });
 
+  const dispatch = useDispatch()
+
+  const handleAddItem = (item)=>{
+   
+    //dispatch an action
+    dispatch(addItem(item))
+
+  }
+
   return (
     <div className="restraunt_menu">
       <h1>{name}</h1>
@@ -89,6 +100,9 @@ const RestaurantMenu = () => {
                               c.card.info.price || c.card.info.defaultPrice
                             ) / 100}
                           </span>
+                        </div>
+                        <div>
+                        <button onClick={()=>handleAddItem(c.card.info)} style={{position:'absolute', right:"70px", backgroundColor:"black",color:"#fff"}}>ADD +</button>
                         </div>
                         <img src={CDN_URL + `${c.card.info.imageId}`} alt="" />
                       </div>
