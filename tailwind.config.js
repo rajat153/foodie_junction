@@ -4,7 +4,20 @@ module.exports = {
     "./src/**/*.{html,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'custom-color': '#A6A8B0',
+        'custom-green': '#00ff00',
+        'coupon-heading' : '#686B78'
+      }
+    },
+    borderWidth: {
+      DEFAULT: '1px',
+      '0': '0',
+      '2': '1px',
+      '4': '4px'
+    }
+
   },
   plugins: [],
 }

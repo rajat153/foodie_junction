@@ -48,15 +48,15 @@ const Body = () => {
 
   const onlineStatus =useOnlineStatus()
 
-  if(onlineStatus === false) return( <h1>Looks Like you are not connected to internet</h1>)
+  if(onlineStatus === false) return( <h1 className=" font-bold flex justify-center items-center h-screen text-2xl">Looks Like you are not connected to internet</h1>)
 
   return resList.length == 0 ? (
     <Shimmer />
   ) : (
     <main>
-      <div className="filter">
+      <div className=" font-medium text-xl flex justify-between items-center p-4 m-4">
         <button
-          className="filter_btn"
+          className="px-8 py-4 rounded-full bg-orange-300 text-white"
           onClick={() => {
             handleClick();
           }}
@@ -66,14 +66,14 @@ const Body = () => {
         <div>
           <input
             type="text"
-            className="search"
+            className="px-8 py-3 mx-3 rounded-full border-2 border-gray-300 "
             onChange={(e) => {
               setSearch(e.target.value);
             }}
             value={search}
           />
           <button
-            className="search_btn"
+            className="px-8 py-4 rounded-full bg-orange-300  text-white"
             onClick={() => {
               filterData();
             }}
@@ -82,7 +82,7 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="res_container">
+      <div className="flex flex-wrap justify-evenly">
         {filterRestaurant.map((item, index) => (
           <Link
             key={item.info.id}
