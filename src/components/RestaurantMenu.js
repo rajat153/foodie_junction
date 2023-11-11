@@ -26,6 +26,7 @@ const RestaurantMenu = () => {
   const resId = useParams();
 
   const hotelmenu = useRestrauntMenu(resId);
+  console.log(hotelmenu)
 
   // useEffect(() => {
   //   gettHotelMenu();
@@ -55,6 +56,7 @@ const RestaurantMenu = () => {
 
   let cardItems =
     hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+   console.log(cardItems)
 
   let menuItemsCategory = cardItems?.filter((item) => {
     return (
@@ -63,6 +65,7 @@ const RestaurantMenu = () => {
     );
   });
 
+  console.log("menuItemsCategory",menuItemsCategory)
   let couponArray =
     hotelmenu?.cards[1].card.card.gridElements.infoWithStyle.offers;
 
@@ -91,7 +94,7 @@ const RestaurantMenu = () => {
       </div>
 
       <CouponList couponArray={couponArray} />
-      {menuItemsCategory.map((item, index) => {
+      {menuItemsCategory?.map((item, index) => {
         return (
           <div className="menuItem_container py-2">
             <Accordion
