@@ -36,7 +36,11 @@ const Header = () => {
             <Link to="/grocery">Grocery</Link>
           </li>
           <li>
-          <Link to="/cart">Cart ({cartItems.length} -items)</Link></li>
+           {/* <span>45</span> */}
+          <span style = {{ position :"absolute",borderBottom: "20px solid orange",borderLeft: "15px solid transparent",borderRight: "15px solid transparent",
+	          height: "0px",right:"190px", fontSize:"15px",width: "45px", textAlign:"center"}}>{cartItems.length}</span>
+           <Link to="/cart">Cart </Link>
+          </li>
         </ul>
       </div>
       <button onClick={() => setLogin((prev) => !prev)} className="login_btn">

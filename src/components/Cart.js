@@ -39,6 +39,7 @@ const Cart = () => {
     }
 
     <button onClick = {handleclearCart}>Clear cart</button>
+    {cartItems.length === 0 && (<h4>Cart is Empty</h4>)}
 
     </>
     

@@ -176,12 +176,14 @@
   height:140px;
   display:flex;
   justify-content: space-between;
+  position: relative;
 }
 .menuItem_card span{
-    font-size: 25px;
+    /* font-size: 25px; */
+    font-size: 1.5vw;
     color:#a59898;
 }
-.menuItem_card span:before{
+.menuItem_card > span:before{
     /* color:lightgrey; */
     content: "\20B9";
 }
@@ -191,3 +193,34 @@
     border-radius: 15px;
     box-shadow: 0px 10px 25px grey;
 }
+
+.menuItem_card button {
+    background-color: black;
+    color: #fff;
+    padding: 10px;
+    font-size: 1vw; /* Use vw for font size */
+    border: none;
+}
+
+.adding_btn {
+    display: flex;
+    width :max-content;
+    position: absolute;
+    right: 4%;
+    bottom: 5%; 
+    background-color :black;
+    color: white;
+    /* text-align: center; */
+    /* inset: 0; */
+    padding-inline: 5px;
+}
+
+
+.menuItem_card .btn1 {
+    position: absolute;
+    right: 4%; /* Adjust the right position as needed */
+    bottom: 5%; /* Adjust the bottom position as needed */
+}
+
+
+

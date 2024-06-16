@@ -10,7 +10,8 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
 import { useDispatch } from "react-redux";
-import { addItem } from "../utils/cartSlice";
+import { addItem, removeItem, removeSelectedItem } from "../utils/cartSlice";
+import { useSelector } from "react-redux";
 
 const RestaurantMenu = () => {
   let initialArray = Array.from({ length: 30 }, (_, index) => index === 0);
@@ -28,6 +29,7 @@ const RestaurantMenu = () => {
 
   const hotelmenu = useRestrauntMenu(resId)
 
+  const cartItems = useSelector((store)=>store.cart.items)
   // useEffect(() => {
   //   gettHotelMenu();
   // }, []);
@@ -45,13 +47,14 @@ const RestaurantMenu = () => {
 
   console.log(hotelmenu)
 
-  let { name, cuisines, costForTwoMessage } =
-    hotelmenu?.cards[0]?.card?.card?.info;
+  let {groupedCard} = hotelmenu.cards[4]
 
-  let cardItems =
-    hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  // let { name, cuisines, costForTwoMessage } =
+  //   hotelmenu?.cards[0]?.card?.card?.info;
 
-  let menuItemsCategory = cardItems?.filter((item) => {
+  let cardItems = groupedCard?.cardGroupMap?.REGULAR?.cards;
+
+  let menuItemsCategory = cardItems.slice(2)?.filter((item) => {
     return (
       item?.card?.card?.["@type"] ===
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
@@ -61,10 +64,13 @@ const RestaurantMenu = () => {
   const dispatch = useDispatch()
 
   const handleAddItem = (item)=>{
-   
     //dispatch an action
     dispatch(addItem(item))
+  }
 
+  const handleRemoveItem = (item)=>{
+    //dispatch an action
+    dispatch(removeSelectedItem(item))
   }
 
   return (
@@ -101,10 +107,17 @@ const RestaurantMenu = () => {
                             ) / 100}
                           </span>
                         </div>
-                        <div>
-                        <button onClick={()=>handleAddItem(c.card.info)} style={{position:'absolute', right:"70px", backgroundColor:"black",color:"#fff"}}>ADD +</button>
-                        </div>
+                        {/* <div> */}
                         <img src={CDN_URL + `${c.card.info.imageId}`} alt="" />
+                        {cartItems.find((item)=> item.id == c.card.info.id) ? 
+                        <div className = "adding_btn">
+                          <button onClick={()=>handleRemoveItem(c.card.info)} >-</button>
+                          <p>{cartItems.filter((item)=> item.id == c.card.info.id).length}</p>
+                          <button  onClick={()=>handleAddItem(c.card.info)}>+</button>
+                        </div>  :
+                        <button className="btn1" onClick={()=>handleAddItem(c.card.info)} >ADD +</button>}
+                        {/* </div> */}
+                        
                       </div>
                     );
                   })}
