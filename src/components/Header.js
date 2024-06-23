@@ -16,12 +16,12 @@ const Header = () => {
   const cartItems = useSelector((store)=>store.cart.items)
   console.log(cartItems)
   return (
-    <div className="header">
+    <div className="flex justify-between">
       <header>
-        <img src={img} alt="logo_image" className="logo" />
+        <img src={img} alt="logo_image" className="w-28 mx-3 rounded-full" />
       </header>
-      <div className="nav-items">
-        <ul>
+      <div className="flex items-center font-medium">
+        <ul className="flex justify-between p-4 m-4 space-x-8 text-xl ">
           <li>Online Status : {online ? '🟢' : '🔴'}</li>
           <li>
             <Link to="/">Home</Link>
@@ -42,10 +42,11 @@ const Header = () => {
            <Link to="/cart">Cart </Link>
           </li>
         </ul>
-      </div>
-      <button onClick={() => setLogin((prev) => !prev)} className="login_btn">
+        <button  className = "bg-slate-300 rounded-full px-8 py-4  text-xl " onClick={() => setLogin((prev) => !prev)}>
         {login ? "LOGIN" : "LOGOUT"}
-      </button>
+        </button>
+      </div>
+      
     </div>
   );
 };
