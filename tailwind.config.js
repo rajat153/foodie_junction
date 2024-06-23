@@ -8,7 +8,8 @@ module.exports = {
       colors:{
         'custom-color': '#A6A8B0',
         'custom-green': '#00ff00',
-        'coupon-heading' : '#686B78'
+        'coupon-heading' : '#686B78',
+        'background-app' : 'cornsilk'
       }
     },
     borderWidth: {

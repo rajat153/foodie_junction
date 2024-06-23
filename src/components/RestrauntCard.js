@@ -2,7 +2,7 @@ import { CDN_URL } from "../utils/constant";
 
 const RestrauntCard = (props) => {
   return (
-    <div className="font-medium text-xl w-60 m-4 p-2 hover:border-2 rounded-xl hover:scale-110 hover:ease-in duration-300 break-words ">
+    <div data-testid="resCard" className="font-medium text-xl w-60 m-4 p-2 hover:border-2 rounded-xl hover:scale-110 hover:ease-in duration-300 break-words ">
       <img
         src={CDN_URL + `${props.cloudinaryImageId}`}
         alt=""
