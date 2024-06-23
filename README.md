@@ -8,7 +8,7 @@
 
 
 # types of testing (developer)
-- unit testing
+- unit testing (test your react component in isolation)
 - Integration testing
 - end to end testing
 
@@ -20,6 +20,6 @@
  - Configure Parcel Config file to disable default babel transpilation
  - Jest Configuration -- npx jest --init
  - Install jsdom library
- - Install @babel/preset-react -to make JSX work in test cases
+ - Install @babel/preset-react -to make JSX work in test cases files
  - Include @babel/preset-react inside my 
  - Install @testing-library/jest-dom

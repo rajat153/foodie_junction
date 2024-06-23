@@ -17,8 +17,6 @@ function Contact() {
           <label htmlFor="remarks">Message : </label>
         <textarea name="remarks" id="" cols="30" rows="10"  className='border-2'placeholder='Enter yout Message'></textarea>
         </div>
-       
-
         <button className='bg-sky-700 rounded-full w-20'>Submit</button>
       </form>
     </div>

@@ -57,7 +57,6 @@ const Header = () => {
 
    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
-   console.log(isDarkMode, toggleTheme)
 
   let [login, setLogin] = useState(true);
   const online = useOnlineStatus()

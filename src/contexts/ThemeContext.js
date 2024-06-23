@@ -4,7 +4,6 @@ export const ThemeContext = createContext();
 
 export function ThemeProvider(props) {
 
-  console.log('propsss', props)
   const [isDarkMode, setDarkMode] = React.useState(false);
 
   const toggleTheme = () => {
