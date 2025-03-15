@@ -1,6 +1,6 @@
 import RestrauntCard from "./RestrauntCard";
 import { useState, useEffect } from "react";
-import data from "../utils/data";
+// import data from "../utils/data";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
