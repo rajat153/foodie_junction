@@ -2,37 +2,34 @@
 *{
     padding: 0;
     margin:0;
-    font-size: 25px;
+    /* font-size: 25px; */
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
 }
-
-
-
+/* 
 .header{
     display :flex;
     justify-content: space-between;
     padding: 10px;
-    /* border-bottom:1px solid lightslategray; */
-}
+    border-bottom:1px solid lightslategray;
+} */
 
-.logo{
+/* .logo{
     width:30%;
     border-radius:50%;
     box-shadow: 0px 0px 15px rgb(78, 77, 77);
-  
-}
+} */
 
-.nav-items > ul{
+/* .nav-items > ul{
     display: flex;
     list-style-type: none;
-}
+} */
 
-.nav-items > ul > li{
+/* .nav-items > ul > li{
     padding: 10px 40px;
     font-size: 30px;
-}
+} */
 
 .res_container{
     display: flex;
@@ -118,7 +115,6 @@
     background-color: #f0f0f0;
     margin:25px;
     border-radius: 10px;
-
 }
 
 .login_btn{
@@ -165,10 +161,7 @@
 .restraunt_menu > h1{
   padding:10px 20px;
   font-size: 40px;
-  
 }
-
-
 
 .menuItem_card{
   border-bottom:1px solid #D3D3D3;
@@ -214,13 +207,6 @@
     /* text-align: center; */
     /* inset: 0; */
     padding-inline: 5px;
-}
-
-
-.menuItem_card .btn1 {
-    position: absolute;
-    right: 4%; /* Adjust the right position as needed */
-    bottom: 5%; /* Adjust the bottom position as needed */
 }
 
 

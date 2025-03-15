@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext }  from "react";
 import { useState } from "react";
 import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constant";
@@ -9,7 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
-
+import { LocationContext } from "../contexts/LocationContext";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, removeSelectedItem } from "../utils/cartSlice";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ import CouponList from "./CouponList";
 
 const RestaurantMenu = () => {
   let initialArray = Array.from({ length: 30 }, (_, index) => index === 0);
-
+   const { lat, lng } = useContext(LocationContext)
   // const [hotelmenu, setHotelMenu] = useState(null);
   const [expanded, setExpanded] = useState(initialArray);
 
@@ -31,7 +31,7 @@ const RestaurantMenu = () => {
 
   const resId = useParams();
 
-  const hotelmenu = useRestrauntMenu(resId);
+  const hotelmenu = useRestrauntMenu(resId, lat, lng);
   console.log(hotelmenu)
 
   const cartItems = useSelector((store)=>store.cart.items)
@@ -50,7 +50,7 @@ const RestaurantMenu = () => {
 
   if (hotelmenu === null) return <Shimmer />;
 
-  let {groupedCard} = hotelmenu.cards[4]
+  let {groupedCard} = hotelmenu?.cards[5] || hotelmenu?.cards[4]
 
   let {
     name,
@@ -60,7 +60,7 @@ const RestaurantMenu = () => {
     avgRating,
     veg,
     totalRatingsString,
-  } = hotelmenu?.cards[0]?.card?.card?.info;
+  } = hotelmenu?.cards[2]?.card?.card?.info;
 
   // let cardItems =
   //   hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
@@ -70,7 +70,8 @@ const RestaurantMenu = () => {
 
   let cardItems = groupedCard?.cardGroupMap?.REGULAR?.cards;
 
-  let menuItemsCategory = cardItems.slice(2)?.filter((item) => {
+  console.log("cardItwms", cardItems)
+  let menuItemsCategory = cardItems?.slice(2)?.filter((item) => {
     return (
       item?.card?.card?.["@type"] ===
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
@@ -90,9 +91,7 @@ const RestaurantMenu = () => {
   }
 
   let couponArray =
-    hotelmenu?.cards[1].card.card.gridElements.infoWithStyle.offers;
-
-
+    hotelmenu?.cards[3].card.card.gridElements.infoWithStyle.offers;
   return (
     <div className="container mx-auto py-6">
       <div className="flex flex-row justify-between items-center  border-dotted border-b-4 my-12">
@@ -116,7 +115,6 @@ const RestaurantMenu = () => {
           </p>
         </div>
       </div>
-
       <CouponList couponArray={couponArray} />
       {menuItemsCategory?.map((item, index) => {
         return (
@@ -144,33 +142,60 @@ const RestaurantMenu = () => {
                         className=" flex justify-between p-2 border-b-2 m-2"
                         key={index}
                       >
-                        <div className="font-medium text-xl ">
+                        <div className="font-medium text-xl leading-10 py-2">
                           <h3>{c.card.info.name}</h3>
-                          <span>
+                          <div>
                             ₹
                             {Number(
                               c.card.info.price || c.card.info.defaultPrice
-                            ) / 100}
-                          </span>
-                          <p className="text-base font-medium ">
+                            ) / 100} {
+                            }
+                          </div>
+                          {c?.card?.info?.ratings?.aggregatedRating?.rating && <div className="flex items-center"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" fillColor="#116649"><rect width="14" height="14" fill="white"></rect><path d="M5.67163 3.99166C6.22068 2.34179 6.49521 1.51686 7 1.51686C7.50479 1.51686 7.77932 2.34179 8.32837 3.99166L8.65248 4.96556H9.60668C11.4122 4.96556 12.315 4.96556 12.4703 5.45302C12.6256 5.94049 11.8893 6.4628 10.4167 7.50744L9.67376 8.03444L9.97544 8.94095C10.5325 10.615 10.8111 11.452 10.4033 11.754C9.99553 12.056 9.27604 11.5457 7.83705 10.5249L7 9.93112L6.16295 10.5249C4.72396 11.5457 4.00447 12.056 3.5967 11.754C3.18893 11.452 3.46747 10.615 4.02456 8.94095L4.04557 8.87783C4.18081 8.47145 4.24843 8.26825 4.18684 8.08006C4.12525 7.89187 3.94958 7.76725 3.59824 7.51802C2.11566 6.46633 1.37437 5.94049 1.52971 5.45302C1.68504 4.96556 2.5878 4.96556 4.39332 4.96556H5.34752L5.67163 3.99166Z" fill="#116649"></path></svg>
+                          {c?.card?.info?.ratings?.aggregatedRating?.rating}<p>({c?.card?.info?.ratings?.aggregatedRating?.ratingCountV2})</p>
+                          </div>}
+                          <p className="text-base text-gray-500 text-ellipsis overflow-hidden whitespace-normal max-w-[70vw]">
                             {c.card.info.description}
                           </p>
-                        </div>
+                        </div>                        
                         {/* <div> */}
-                        <img src={CDN_URL + `${c.card.info.imageId}`} alt="" />
-                        {cartItems.find((item)=> item.id == c.card.info.id) ? 
+                        {/* <img src={CDN_URL + `${c.card.info.imageId}`} alt="" /> */}
+                        {/* {cartItems.find((item)=> item.id == c.card.info.id) ? 
                         <div className = "adding_btn">
                           <button onClick={()=>handleRemoveItem(c.card.info)} >-</button>
                           <p>{cartItems.filter((item)=> item.id == c.card.info.id).length}</p>
                           <button  onClick={()=>handleAddItem(c.card.info)}>+</button>
                         </div>  :
-                        <button className="btn1" onClick={()=>handleAddItem(c.card.info)} >ADD +</button>}
+                        <button className="btn1" onClick={()=>handleAddItem(c.card.info)} >ADD +</button>} */}
                         {/* </div> */}
-                        <img
+                        {/* <img
                           className="h-40 w-40 rounded-md"
                           src={CDN_URL + `${c.card.info.imageId}`}
                           alt=""
-                        />
+                        /> */}
+                         <div className="h-40 w-40 relative">
+                          <img
+                            className="h-40 w-40 rounded-md"
+                            src={CDN_URL + `${c.card.info.imageId}`}
+                            alt=""
+                          />
+                          {cartItems.find((item) => item.id == c.card.info.id) ? (
+                            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-md flex items-center p-1">
+                              <button onClick={() => handleRemoveItem(c.card.info)}>-</button>
+                              <p className="mx-2">
+                                {cartItems.filter((item) => item.id == c.card.info.id).length}
+                              </p>
+                              <button onClick={() => handleAddItem(c.card.info)}>+</button>
+                            </div>
+                          ) : (
+                            <button
+                              className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-md shadow-md font-semibold"
+                              onClick={() => handleAddItem(c.card.info)}
+                            >
+                              ADD +
+                            </button>
+                          )}
+                        </div>
                       </div>
                     );
                   })}
