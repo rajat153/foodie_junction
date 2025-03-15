@@ -1,4 +1,4 @@
-import img from "../../images/logo1.png";
+import logo from "../../images/logo1.png";
 import { useState, useEffect, useContext} from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -6,6 +6,7 @@ import Switch from '@mui/material/Switch';
 import {ThemeContext} from '../contexts/ThemeContext';
 import { styled } from '@mui/material/styles';
 import { useSelector } from "react-redux";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -55,8 +56,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 const Header = () => {
-
-   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
 
   let [login, setLogin] = useState(true);
@@ -68,44 +69,78 @@ const Header = () => {
 
   const cartItems = useSelector((store)=>store.cart.items)
   return (
-    <div className="flex justify-between">
-      <header>
-        <img src={img} alt="logo_image" className="w-28 m-2 rounded-full" />
-      </header>
-      <div className="flex items-center font-medium">
-        <MaterialUISwitch onChange={toggleTheme}/>
-        {/* <Switch onChange={toggleTheme} color = 'primary' sx={{'.MuiSwitch-colorPrimary': {
-        backgroundColor: isDarkMode ? '' : '',
-        color :isDarkMode ? 'white' : 'cornsilk',
-        opacity: 1,
-        // border: 2,
-      },}}/> */}
-        <ul className="flex justify-between p-4 m-4 space-x-8 text-xl ">
-          <li>Online Status : {online ? '🟢' : '🔴'}</li>
-          <li>
-            <Link to="/" className="hover:text-orange-300">Home</Link>
+    // <div className="flex border-2 border-red-500 justify-between items-center p-4 bg-white shadow-md md:px-6">
+    // <header class="md:shrink-0" >
+    //   <img src={logo} alt="logo_image" className="w-16 md:w-20 rounded-full" />
+    // </header>
+
+    // <button className="md:hidden text-2xl border-2 border-green-400" onClick={() => setMenuOpen(!menuOpen)}>
+    //   {menuOpen ? <FaTimes /> : <FaBars />}
+    // </button>
+
+    // <div className={`md:flex border-2 border-red-600 items-center font-medium ${menuOpen ? "block" : "hidden"} md:block`}>
+    //   <MaterialUISwitch onChange={toggleTheme} />
+
+    //   <ul className="flex flex-col md:flex-row flex-wrap gap-2 md:space-x-8 p-4 m-2 text-lg text-center bg-white rounded-md">
+    //     <li>Online Status: {online ? "🟢" : "🔴"}</li>
+    //     <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
+    //     <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
+    //     <li><Link to="/contact" className="hover:text-orange-500">Contact</Link></li>
+    //     <li><Link to="/grocery" className="hover:text-orange-500">Grocery</Link></li>
+    //     <li><Link to="/cart" className="hover:text-orange-500">Cart</Link></li>
+
+    //     <li className="relative">
+    //       <span className="absolute -right-3 -top-3 bg-orange-500 text-white text-xs font-bold rounded-full px-2 py-1">
+    //         {cartItems.length}
+    //       </span>
+    //       🛒
+    //     </li>
+    //   </ul>
+
+    //   <button className="bg-orange-300 rounded-full px-6 py-2" 
+    //     onClick={() => setLogin((prev) => !prev)}>
+    //     {login ? "LOGIN" : "LOGOUT"}
+    //   </button>
+    // </div>
+    // </div>
+
+    <div className="flex justify-between items-center p-4 md:px-6">
+    <header className="md:shrink-0" >
+      <img src={logo} alt="logo_image" className="w-16 md:w-20 m-2 rounded-full" />
+    </header>
+    <button className="md:hidden text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
+      {menuOpen ? <FaTimes style={menuOpen ? {display : 'none'} : ''} /> : <FaBars />}
+    </button>
+    <div
+      className={`fixed top-0  right-0 h-full transition-transform duration-300 ease-in-out transform ${
+        menuOpen ? "translate-x-0 z-10 bg-white" : "translate-x-full"
+      } w-64 md:w-auto md:relative md:translate-x-0`}
+    >
+      <button className="absolute top-8 right-4 text-xl md:hidden" onClick={() => setMenuOpen(false)}>
+        <FaTimes />
+      </button>
+      <div className="flex flex-col md:flex-row md:items-center font-medium p-6 space-y-4 md:space-y-0 md:space-x-6">
+        <MaterialUISwitch onChange={toggleTheme} />
+        <ul className="flex flex-col flex-wrap md:flex-row md:space-x-6 text-lg text-center">
+          <li>Online Status: {online ? "🟢" : "🔴"}</li>
+          <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
+          <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
+          <li><Link to="/contact" className="hover:text-orange-500">Contact</Link></li>
+          <li><Link to="/grocery" className="hover:text-orange-500">Grocery</Link></li>
+          <li><Link to="/cart" className="hover:text-orange-500">Cart</Link></li>
+          <li className="relative">
+            <span className ={`absolute ${ menuOpen ? "-right-3 -top-6" : "-right-0 -top-3"}  bg-orange-500 text-white text-xs font-bold rounded-full px-2 py-1`}>
+              {cartItems.length}
+            </span>
           </li>
-          <li>
-            <Link to="/about" className="hover:text-orange-300">About</Link>
-          </li>
-          <li>
-            <Link to="/contact" className="hover:text-orange-300">Contact</Link>
-          </li>
-          <li>
-            <Link to="/grocery" className="hover:text-orange-300">Grocery</Link>
-          </li>
-          <li>
-           <Link to="/cart" className="hover:text-orange-300">Cart </Link>
-          </li>
-          <li style={{position :'relative'}}><span style = {{ position :"absolute",borderBottom: "25px solid orange",borderLeft: "15px solid transparent",borderRight: "15px solid transparent",
-	          height : "0px", right:"-20px", fontSize:"15px",width: "45px", textAlign:"center"}}>{cartItems.length}</span></li>
         </ul>
-        <button  className = "bg-orange-300 rounded-full px-8 py-2  text-xl " onClick={() => setLogin((prev) => !prev)}>
-        {login ? "LOGIN" : "LOGOUT"}
+        <button className="bg-orange-300 rounded-full px-6 py-2 text-lg md:text-xl" 
+          onClick={() => setLogin((prev) => !prev)}>
+          {login ? "LOGIN" : "LOGOUT"}
         </button>
       </div>
-      
     </div>
+  </div>
   );
 };
 

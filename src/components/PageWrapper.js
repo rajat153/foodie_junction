@@ -6,6 +6,7 @@ export default function PageWrapper(props) {
   const styles = {
     backgroundColor: isDarkMode  ? "rgba(40,44,53, 0.5)" : "cornsilk",
     minHeight: "100vh",
+    minWidth : "100vw"
   };
   return <div style={styles}>{props.children}</div>;
 }
