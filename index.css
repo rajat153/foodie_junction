@@ -6,7 +6,7 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
-}
+/* } */
 
 
 
@@ -223,7 +223,6 @@
     bottom: 5%; /* Adjust the bottom position as needed */
 }
 
- */
 
 
 @tailwind base;
