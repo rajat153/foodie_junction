@@ -93,7 +93,7 @@ const Header = () => {
           </li>
           <li>Cart</li>
         </ul>
-        <button  className = "bg-slate-300 rounded-full px-8 py-4  text-xl " onClick={() => setLogin((prev) => !prev)}>
+        <button  className = "bg-orange-300 rounded-full px-8 py-4  text-xl " onClick={() => setLogin((prev) => !prev)}>
         {login ? "LOGIN" : "LOGOUT"}
         </button>
       </div>
