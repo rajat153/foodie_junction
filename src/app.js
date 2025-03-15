@@ -1,4 +1,4 @@
-import React,{lazy, Suspense} from "react";
+import React,{lazy, Suspense, useContext} from "react";
 import ReactDOM from "react-dom/client"
 import Header from "./components/Header";
 import Body from './components/Body';
@@ -6,6 +6,9 @@ import Error from './components/Error';
 import Contact from "./components/Contact";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import  RestaurantMenu from "./components/RestaurantMenu";
+import {ThemeProvider} from  './contexts/ThemeContext';
+import {ThemeContext} from './contexts/ThemeContext';
+import PageWrapper from "./components/PageWrapper";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
@@ -26,14 +29,21 @@ const Grocery = lazy(()=>import('./components/Grocery'));
 
 
 const App = () => {
+    //  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+    //  console.log(isDarkMode)
+
     return (
-        <Provider store={appStore} >
-            <div className = "app">
-                <Header/>
-                <Outlet/>
-                {/* <Body/> */}
-            </div>
-        </Provider>
+         <ThemeProvider>
+            <PageWrapper>
+                <Provider store={appStore} >
+                    <div className = "app">
+                        <Header/>
+                        <Outlet/>
+                        {/* <Body/> */}
+                    </div>
+                </Provider>
+            </PageWrapper>
+         </ThemeProvider>
     )
 }
 

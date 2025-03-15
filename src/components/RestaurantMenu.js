@@ -32,6 +32,7 @@ const RestaurantMenu = () => {
   const resId = useParams();
 
   const hotelmenu = useRestrauntMenu(resId);
+  console.log(hotelmenu)
 
   const cartItems = useSelector((store)=>store.cart.items)
   // useEffect(() => {
@@ -61,7 +62,9 @@ const RestaurantMenu = () => {
     totalRatingsString,
   } = hotelmenu?.cards[0]?.card?.card?.info;
 
-
+  // let cardItems =
+  //   hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  //  console.log(cardItems)
   // let { name, cuisines, costForTwoMessage } =
   //   hotelmenu?.cards[0]?.card?.card?.info;
 
@@ -73,7 +76,6 @@ const RestaurantMenu = () => {
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
   });
-
 
   const dispatch = useDispatch()
 
@@ -116,7 +118,7 @@ const RestaurantMenu = () => {
       </div>
 
       <CouponList couponArray={couponArray} />
-      {menuItemsCategory.map((item, index) => {
+      {menuItemsCategory?.map((item, index) => {
         return (
           <div className="menuItem_container py-2">
             <Accordion
