@@ -1,33 +1,30 @@
 import RestrauntCard from "./RestrauntCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { LocationContext } from "../contexts/LocationContext";
 
 const Body = () => {
   const [resList, setResList] = useState([]);
   const [filterRestaurant, setfilterRestaurant] = useState([]);
   const [search, setSearch] = useState([""]);
+  const { lat, lng } = useContext(LocationContext)
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser");
-    } else {
-      navigator.geolocation.getCurrentPosition(fetchData, error);
-    }
+    if (lat && lng) {
     fetchData();
-  }, []);
+    }
+  }, [lat, lng]);
 
   function error() {
     alert("Geolaocation Coordinate not found");
   }
 
   //Whenever state variables update react triggers a reconcillation cycle;
-  const fetchData = async (position) => {
-    const latitude = position?.coords?.latitude;
-    const longitude = position?.coords?.longitude;
+  const fetchData = async () => {
     const data = await fetch(
-      `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${latitude}&lng=${longitude}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
+      `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
     );
     const resp = await data.json();
     let filteredData = resp.data?.cards?.filter(
@@ -74,7 +71,7 @@ const Body = () => {
     <main>
       <div className="font-medium text-xl flex justify-between items-center p-4 m-4">
         <button
-          className="px-8 py-4 rounded-full bg-orange-300 text-white"
+          className="px-8 py-2 rounded-full bg-orange-300 text-white"
           onClick={() => {
             handleClick();
           }}
@@ -85,14 +82,14 @@ const Body = () => {
           <input
             data-testid = "searchinput"
             type="text"
-            className="px-8 py-3 mx-3 rounded-full border-2 border-gray-300 "
+            className="px-8 py-2 mx-3 rounded-full border-2 border-gray-300 "
             onChange={(e) => {
               setSearch(e.target.value);
             }}
             value={search}
           />
           <button
-            className="px-8 py-4 rounded-full bg-orange-300  text-white"
+            className="px-8 py-2 rounded-full bg-orange-300  text-white"
             onClick={() => {
               filterData();
             }}

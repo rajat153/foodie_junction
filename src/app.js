@@ -7,11 +7,11 @@ import Contact from "./components/Contact";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import  RestaurantMenu from "./components/RestaurantMenu";
 import {ThemeProvider} from  './contexts/ThemeContext';
-import {ThemeContext} from './contexts/ThemeContext';
 import PageWrapper from "./components/PageWrapper";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import { LocationProvider } from "./contexts/LocationContext";
 
 
 
@@ -25,14 +25,12 @@ import Cart from "./components/Cart";
 const About = lazy(()=>import('./components/About'));
 const Grocery = lazy(()=>import('./components/Grocery'));
 
-
-
-
 const App = () => {
     //  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
     //  console.log(isDarkMode)
 
     return (
+        <LocationProvider>
          <ThemeProvider>
             <PageWrapper>
                 <Provider store={appStore} >
@@ -44,6 +42,7 @@ const App = () => {
                 </Provider>
             </PageWrapper>
          </ThemeProvider>
+        </LocationProvider>
     )
 }
 

@@ -64,11 +64,9 @@ const Header = () => {
   //if no dependency array  => useeffect will called on every render
   //if dependency array is empty = []  => useeffect will called on initial render(just once)
   //if dependency array is not empty  = [btnNameReact]  => useeffect will called everytime btnnumber is updated
-  
   // Subscribing to store using a Selector
 
   const cartItems = useSelector((store)=>store.cart.items)
-  console.log(cartItems)
   return (
     <div className="flex justify-between">
       <header>
@@ -85,25 +83,24 @@ const Header = () => {
         <ul className="flex justify-between p-4 m-4 space-x-8 text-xl ">
           <li>Online Status : {online ? '🟢' : '🔴'}</li>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="hover:text-orange-300">Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about" className="hover:text-orange-300">About</Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/contact" className="hover:text-orange-300">Contact</Link>
           </li>
           <li>
-            <Link to="/grocery">Grocery</Link>
+            <Link to="/grocery" className="hover:text-orange-300">Grocery</Link>
           </li>
           <li>
-           {/* <span>45</span> */}
-          <span style = {{ position :"absolute",borderBottom: "20px solid orange",borderLeft: "15px solid transparent",borderRight: "15px solid transparent",
-	          height: "0px",right:"190px", fontSize:"15px",width: "45px", textAlign:"center"}}>{cartItems.length}</span>
-           <Link to="/cart">Cart </Link>
+           <Link to="/cart" className="hover:text-orange-300">Cart </Link>
           </li>
+          <li style={{position :'relative'}}><span style = {{ position :"absolute",borderBottom: "25px solid orange",borderLeft: "15px solid transparent",borderRight: "15px solid transparent",
+	          height : "0px", right:"-20px", fontSize:"15px",width: "45px", textAlign:"center"}}>{cartItems.length}</span></li>
         </ul>
-        <button  className = "bg-orange-300 rounded-full px-8 py-4  text-xl " onClick={() => setLogin((prev) => !prev)}>
+        <button  className = "bg-orange-300 rounded-full px-8 py-2  text-xl " onClick={() => setLogin((prev) => !prev)}>
         {login ? "LOGIN" : "LOGOUT"}
         </button>
       </div>
