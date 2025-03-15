@@ -5,8 +5,6 @@
 
 # so React use virtual DOM
 
-
-
 # types of testing (developer)
 - unit testing (test your react component in isolation)
 - Integration testing
@@ -23,3 +21,13 @@
  - Install @babel/preset-react -to make JSX work in test cases files
  - Include @babel/preset-react inside my 
  - Install @testing-library/jest-dom
+
+# Redux Toolkit
+ install RTK(react-redux and @reduxjs/toolkit)
+ build our store
+ connect our store to our app
+ slice(cartSlice)
+ dispatch(action)
+ selector
+
+

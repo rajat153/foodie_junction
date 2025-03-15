@@ -9,6 +9,9 @@ import  RestaurantMenu from "./components/RestaurantMenu";
 import {ThemeProvider} from  './contexts/ThemeContext';
 import {ThemeContext} from './contexts/ThemeContext';
 import PageWrapper from "./components/PageWrapper";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 
 
 
@@ -32,15 +35,15 @@ const App = () => {
     return (
          <ThemeProvider>
             <PageWrapper>
-            <div >
-                <Header/>
-                <Outlet/>
-                {/* <Body/> */}
-            </div>
+                <Provider store={appStore} >
+                    <div className = "app">
+                        <Header/>
+                        <Outlet/>
+                        {/* <Body/> */}
+                    </div>
+                </Provider>
             </PageWrapper>
-            
          </ThemeProvider>
-        
     )
 }
 
@@ -68,6 +71,10 @@ const appRouter = createBrowserRouter(
         {
             path:"/restaurant/:resId",
             element : <RestaurantMenu/>
+        },
+        {
+            path : '/cart',
+            element : <Cart/>
         }
     ],
     errorElement: <Error/>

@@ -5,6 +5,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import Switch from '@mui/material/Switch';
 import {ThemeContext} from '../contexts/ThemeContext';
 import { styled } from '@mui/material/styles';
+import { useSelector } from "react-redux";
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -63,7 +64,11 @@ const Header = () => {
   //if no dependency array  => useeffect will called on every render
   //if dependency array is empty = []  => useeffect will called on initial render(just once)
   //if dependency array is not empty  = [btnNameReact]  => useeffect will called everytime btnnumber is updated
+  
+  // Subscribing to store using a Selector
 
+  const cartItems = useSelector((store)=>store.cart.items)
+  console.log(cartItems)
   return (
     <div className="flex justify-between">
       <header>
@@ -91,7 +96,12 @@ const Header = () => {
           <li>
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li>Cart</li>
+          <li>
+           {/* <span>45</span> */}
+          <span style = {{ position :"absolute",borderBottom: "20px solid orange",borderLeft: "15px solid transparent",borderRight: "15px solid transparent",
+	          height: "0px",right:"190px", fontSize:"15px",width: "45px", textAlign:"center"}}>{cartItems.length}</span>
+           <Link to="/cart">Cart </Link>
+          </li>
         </ul>
         <button  className = "bg-orange-300 rounded-full px-8 py-4  text-xl " onClick={() => setLogin((prev) => !prev)}>
         {login ? "LOGIN" : "LOGOUT"}

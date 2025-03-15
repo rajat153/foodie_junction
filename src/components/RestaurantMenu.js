@@ -9,7 +9,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
+
+import { useDispatch } from "react-redux";
+import { addItem, removeItem, removeSelectedItem } from "../utils/cartSlice";
+import { useSelector } from "react-redux";
+
 import CouponList from "./CouponList";
+
 
 const RestaurantMenu = () => {
   let initialArray = Array.from({ length: 30 }, (_, index) => index === 0);
@@ -28,6 +34,7 @@ const RestaurantMenu = () => {
   const hotelmenu = useRestrauntMenu(resId);
   console.log(hotelmenu)
 
+  const cartItems = useSelector((store)=>store.cart.items)
   // useEffect(() => {
   //   gettHotelMenu();
   // }, []);
@@ -43,6 +50,7 @@ const RestaurantMenu = () => {
 
   if (hotelmenu === null) return <Shimmer />;
 
+  let {groupedCard} = hotelmenu.cards[4]
 
   let {
     name,
@@ -54,20 +62,36 @@ const RestaurantMenu = () => {
     totalRatingsString,
   } = hotelmenu?.cards[0]?.card?.card?.info;
 
-  let cardItems =
-    hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-   console.log(cardItems)
+  // let cardItems =
+  //   hotelmenu?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  //  console.log(cardItems)
+  // let { name, cuisines, costForTwoMessage } =
+  //   hotelmenu?.cards[0]?.card?.card?.info;
 
-  let menuItemsCategory = cardItems?.filter((item) => {
+  let cardItems = groupedCard?.cardGroupMap?.REGULAR?.cards;
+
+  let menuItemsCategory = cardItems.slice(2)?.filter((item) => {
     return (
       item?.card?.card?.["@type"] ===
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
   });
 
-  console.log("menuItemsCategory",menuItemsCategory)
+  const dispatch = useDispatch()
+
+  const handleAddItem = (item)=>{
+    //dispatch an action
+    dispatch(addItem(item))
+  }
+
+  const handleRemoveItem = (item)=>{
+    //dispatch an action
+    dispatch(removeSelectedItem(item))
+  }
+
   let couponArray =
     hotelmenu?.cards[1].card.card.gridElements.infoWithStyle.offers;
+
 
   return (
     <div className="container mx-auto py-6">
@@ -132,6 +156,16 @@ const RestaurantMenu = () => {
                             {c.card.info.description}
                           </p>
                         </div>
+                        {/* <div> */}
+                        <img src={CDN_URL + `${c.card.info.imageId}`} alt="" />
+                        {cartItems.find((item)=> item.id == c.card.info.id) ? 
+                        <div className = "adding_btn">
+                          <button onClick={()=>handleRemoveItem(c.card.info)} >-</button>
+                          <p>{cartItems.filter((item)=> item.id == c.card.info.id).length}</p>
+                          <button  onClick={()=>handleAddItem(c.card.info)}>+</button>
+                        </div>  :
+                        <button className="btn1" onClick={()=>handleAddItem(c.card.info)} >ADD +</button>}
+                        {/* </div> */}
                         <img
                           className="h-40 w-40 rounded-md"
                           src={CDN_URL + `${c.card.info.imageId}`}
