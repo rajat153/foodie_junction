@@ -4,11 +4,14 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { LocationContext } from "../contexts/LocationContext";
+import Footer from "./Footer";
+import Carousel from "./Carousel";
 
 const Body = () => {
   const [resList, setResList] = useState([]);
   const [filterRestaurant, setfilterRestaurant] = useState([]);
   const [search, setSearch] = useState([""]);
+  const [carauselData, setCarauselData] = useState([])
   const { lat, lng } = useContext(LocationContext)
 
   useEffect(() => {
@@ -16,10 +19,6 @@ const Body = () => {
     fetchData();
     }
   }, [lat, lng]);
-
-  function error() {
-    alert("Geolaocation Coordinate not found");
-  }
 
   //Whenever state variables update react triggers a reconcillation cycle;
   const fetchData = async () => {
@@ -30,11 +29,15 @@ const Body = () => {
     let filteredData = resp.data?.cards?.filter(
       (item) => item.card.card.id == "restaurant_grid_listing"
     );
+    const carauselData = resp.data?.cards?.filter(
+      (item) => item.card.card.id == "whats_on_your_mind"
+    );
 
     if (!filteredData || filteredData.length === 0) {
       console.error("No restaurant data found");
       setResList([]);
       setfilterRestaurant([]);
+      setCarauselData([])
       return;
     }
 
@@ -44,11 +47,12 @@ const Body = () => {
     setfilterRestaurant(
       filteredData[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    setCarauselData(carauselData[0]?.card?.card?.gridElements?.infoWithStyle?.info)
   };
 
   // when component renders then after that useEffect callback function run
   const handleClick = () => {
-    let newArr = filterRestaurant.filter((item) => item.info.avgRating > 4);
+    let newArr = filterRestaurant.filter((item) => item.info.avgRating >= 4.5);
     setfilterRestaurant(newArr);
   };
 
@@ -61,14 +65,13 @@ const Body = () => {
 
   const onlineStatus =useOnlineStatus()
 
-  // console.log("res", resList)
-
   if(onlineStatus === false) return( <h1 className=" font-bold flex justify-center items-center h-screen text-2xl">Looks Like you are not connected to internet</h1>)
 
   return resList.length == 0 ? (
     <Shimmer />
   ) : (
     <main>
+      <Carousel items = {carauselData}/>
       <div className="font-medium text-xl flex justify-between items-center p-4 m-4">
         <button
           className="px-8 py-2 rounded-full bg-orange-300 text-white"
@@ -117,6 +120,7 @@ const Body = () => {
           </Link>
         ))}
       </div>
+      <Footer/>
     </main>
   );
 };
