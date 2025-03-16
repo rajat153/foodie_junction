@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
 import { LocationProvider } from "./contexts/LocationContext";
+import Footer from "./components/Footer";
 
 
 
