@@ -25,7 +25,7 @@ const Carousel = ({items}) => {
         className = 'flex space-x-4 overflow-x-auto scroll-smooth no-scrollbar w-full p-4'
         style={{scrollbarWidth :'none'}}> 
         {
-            items.map((item, index)=>{
+            items?.map((item, index)=>{
                return <div key={item.id} className='flex flex-col items-center min-w-[140px]'>
                 <img className='mix-blend-multiply object-cover' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}/>
                </div>
