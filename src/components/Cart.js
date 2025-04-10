@@ -10,7 +10,7 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  handleclearCart = () => {
+  const handleclearCart = () => {
      dispatch(clearCart())
   }
 

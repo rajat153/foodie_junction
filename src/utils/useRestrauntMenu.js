@@ -12,10 +12,8 @@ const  useRestrauntMenu =  (resId, lat, lng) => {
     }, [lat, lng])
 
     const fetchData = async() => {
-        const apiUrl = `${MENU_API}&lat=${lat}&lng=${lng}&restaurantId=${resId?.resId}`;
-        const getData = await fetch(
-          apiUrl
-        );
+        const apiUrl = `${MENU_API}lat=${lat}&lng=${lng}&restaurantId=${resId?.resId}`;
+        const getData = await fetch(apiUrl);
         const response = await getData.json();
         setResInfo(response.data);
     };

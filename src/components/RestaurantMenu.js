@@ -70,7 +70,6 @@ const RestaurantMenu = () => {
 
   let cardItems = groupedCard?.cardGroupMap?.REGULAR?.cards;
 
-  console.log("cardItwms", cardItems)
   let menuItemsCategory = cardItems?.slice(2)?.filter((item) => {
     return (
       item?.card?.card?.["@type"] ===

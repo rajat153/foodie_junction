@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { LocationContext } from "../contexts/LocationContext";
 import Footer from "./Footer";
-import Carousel from "./Carousel";
-
+import Carousel from "./carousel";
 const Body = () => {
   const [resList, setResList] = useState([]);
   const [filterRestaurant, setfilterRestaurant] = useState([]);
@@ -22,32 +21,37 @@ const Body = () => {
 
   //Whenever state variables update react triggers a reconcillation cycle;
   const fetchData = async () => {
-    const data = await fetch(
-      `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
-    );
-    const resp = await data.json();
-    let filteredData = resp.data?.cards?.filter(
-      (item) => item.card.card.id == "restaurant_grid_listing"
-    );
-    const carauselData = resp.data?.cards?.filter(
-      (item) => item.card.card.id == "whats_on_your_mind"
-    );
-
-    if (!filteredData || filteredData.length === 0) {
-      console.error("No restaurant data found");
-      setResList([]);
-      setfilterRestaurant([]);
-      setCarauselData([])
-      return;
+    try{
+     const data = await fetch(`https://foodie-junction-server.vercel.app/api/swiggy/restaurants?lat=${lat}&lng=${lng}`)
+      if (!data.ok) {
+        const err = data.status;
+        throw new Error(err);
+      }else{   
+        const resp = await data.json();
+        let filteredData = resp.data?.cards?.filter(
+          (item) => item.card.card.id == "restaurant_grid_listing_v2"
+        );
+        const carauselData = resp.data?.cards?.filter(
+          (item) => item.card.card.id == "whats_on_your_mind"
+        );
+        if (!filteredData || filteredData.length === 0) {
+          console.error("No restaurant data found");
+          setResList([]);
+          setfilterRestaurant([]);
+          setCarauselData([])
+          return;
+        }
+        setResList(
+          filteredData[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+        setfilterRestaurant(
+          filteredData[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+        setCarauselData(carauselData[0]?.card?.card?.gridElements?.infoWithStyle?.info)
+      } 
+    }catch(err){
+      console.log(err);
     }
-
-    setResList(
-      filteredData[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setfilterRestaurant(
-      filteredData[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setCarauselData(carauselData[0]?.card?.card?.gridElements?.infoWithStyle?.info)
   };
 
   // when component renders then after that useEffect callback function run
