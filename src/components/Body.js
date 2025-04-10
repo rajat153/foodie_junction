@@ -6,10 +6,12 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import { LocationContext } from "../contexts/LocationContext";
 import Footer from "./Footer";
 import Carousel from "./carousel";
+import { IoCloseSharp } from "react-icons/io5";
+
 const Body = () => {
   const [resList, setResList] = useState([]);
   const [filterRestaurant, setfilterRestaurant] = useState([]);
-  const [search, setSearch] = useState([""]);
+  const [search, setSearch] = useState("");
   const [carauselData, setCarauselData] = useState([])
   const { lat, lng } = useContext(LocationContext)
 
@@ -67,6 +69,13 @@ const Body = () => {
     setfilterRestaurant(filterRes);
   };
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      filterData(search);
+    }, 500); // wait 500ms
+    return () => clearTimeout(delay); // cleanup on next key stroke
+  }, [search]);
+
   const onlineStatus =useOnlineStatus()
 
   if(onlineStatus === false) return( <h1 className=" font-bold flex justify-center items-center h-screen text-2xl">Looks Like you are not connected to internet</h1>)
@@ -76,7 +85,7 @@ const Body = () => {
   ) : (
     <main>
       <Carousel items = {carauselData}/>
-      <div className="font-medium text-xl flex justify-between items-center p-4 m-4">
+      <div className="font-medium text-xl flex justify-between p-4 m-4 flex-col md:flex-row gap-2 items-center">
         <button
           className="px-8 py-2 rounded-full bg-orange-300 text-white"
           onClick={() => {
@@ -85,25 +94,39 @@ const Body = () => {
         >
           Top Rated Restraunts
         </button>
-        <div>
+        <form className="flex flex-col md:flex-row items-center justify-center gap-2"  onSubmit={(e) => {
+          e.preventDefault(); 
+          filterData()}}
+        >
+          <div className=" relative w-full max-w-sm">
           <input
             data-testid = "searchinput"
             type="text"
-            className="px-8 py-2 mx-3 rounded-full border-2 border-gray-300 "
+            placeholder="Search..."
+            className="px-4 py-2 mx-2 rounded-full border-2 border-gray-300 outline-none "
             onChange={(e) => {
               setSearch(e.target.value);
             }}
             value={search}
           />
-          <button
-            className="px-8 py-2 rounded-full bg-orange-300  text-white"
-            onClick={() => {
-              filterData();
-            }}
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+            >
+             <IoCloseSharp />
+            </button>
+          )}
+          </div>
+         {/* remove the search button to use debounce with useEffect */}
+          {/* <button
+            type="submit"
+            className="mx-2 py-2 px-4 rounded-full bg-orange-300  text-white"
           >
             Search
-          </button>
-        </div>
+          </button> */}
+        </form>
       </div>
       <div className="flex flex-wrap justify-evenly">
         {filterRestaurant.map((item, index) => (

@@ -106,14 +106,16 @@ const Header = () => {
 
     <div className="flex justify-between items-center p-4 md:px-6">
     <header className="md:shrink-0" >
+      <Link to="/" >
       <img src={logo} alt="logo_image" className="w-16 md:w-20 m-2 rounded-full" />
+      </Link>
     </header>
     <button className="md:hidden text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
       {menuOpen ? <FaTimes style={menuOpen ? {display : 'none'} : ''} /> : <FaBars />}
     </button>
     <div
       className={`fixed top-0  right-0 h-full transition-transform duration-300 ease-in-out transform ${
-        menuOpen ? "translate-x-0 z-10 bg-white" : "translate-x-full"
+        menuOpen ? "translate-x-0 z-10 bg-white md:bg-background-app" : "translate-x-full"
       } w-64 md:w-auto md:relative md:translate-x-0`}
     >
       <button className="absolute top-8 right-4 text-xl md:hidden" onClick={() => setMenuOpen(false)}>
@@ -126,10 +128,10 @@ const Header = () => {
           <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
           <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
           <li><Link to="/contact" className="hover:text-orange-500">Contact</Link></li>
-          <li><Link to="/grocery" className="hover:text-orange-500">Grocery</Link></li>
+          {/* <li><Link to="/grocery" className="hover:text-orange-500">Grocery</Link></li> */}
           <li><Link to="/cart" className="hover:text-orange-500">Cart</Link></li>
           <li className="relative">
-            <span className ={`absolute ${ menuOpen ? "-right-3 -top-6" : "-right-0 -top-3"}  bg-orange-500 text-white text-xs font-bold rounded-full px-2 py-1`}>
+            <span className ={`absolute ${ menuOpen ? "-right-3 -top-7" : "-right-0 -top-3"} md:-right-0 md:-top-3  bg-orange-500 text-white text-xs font-bold rounded-full px-2 py-1`}>
               {cartItems.length}
             </span>
           </li>

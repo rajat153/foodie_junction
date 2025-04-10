@@ -92,22 +92,21 @@ const RestaurantMenu = () => {
   let couponArray =
     hotelmenu?.cards[3].card.card.gridElements.infoWithStyle.offers;
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex flex-row justify-between items-center  border-dotted border-b-4 my-12">
+    <div className="container mx-auto py-3">
+      <div className="flex flex-row justify-between items-center  border-dotted border-4 my-6 mx-2 p-2">
         <div className="">
-          <h1 className="font-bold text-2xl mx-4 py-2">{name}</h1>
-          <h2 className="font-light font-sans text-lg mx-6">
+          <h1 className="font-bold text-2xl">{name}</h1>
+          <h2 className="font-light font-sans text-lg">
             {cuisines.join(",")}
           </h2>
-          <h2 className="font-thin font-sans mx-6 ">{costForTwoMessage}</h2>
-          <h3 className="font-thin font-sans mx-6 mb-6 py-2">
+          <h2 className="font-thin font-sans">{costForTwoMessage}</h2>
+          <h3 className="font-thin font-sans">
             {feeDetails.message}
           </h3>
         </div>
-
         <div className="border-2 rounded-lg p-2">
           <p className="border-b-2 py-2 text-custom-color tracking-tighter text-2xl font-large">
-            ⭐{avgRating}
+            ⭐ {avgRating}
           </p>
           <p className=" text-custom-color tracking-tighter text-xl font-semibold">
             {totalRatingsString}
@@ -124,7 +123,6 @@ const RestaurantMenu = () => {
               onChange={handleChange(index)}
             >
               <AccordionSummary
-                // sx={{ borderBottom: "1px solid #f0f0f0" }}
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"

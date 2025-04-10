@@ -37,13 +37,18 @@ const Cart = () => {
         })
 
     }
-
-    <button onClick = {handleclearCart}>Clear cart</button>
-    {cartItems.length === 0 && (<h4>Cart is Empty</h4>)}
-
+    {cartItems.length !== 0  && <button className = "p-2 my-2 mx-auto block bg-orange-300 rounded-lg"onClick = {handleclearCart}>Clear cart</button>}
+    {cartItems.length === 0 && (
+      <div className='flex flex-col items-center'>
+      <div
+        className="bg-[url('https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0')] bg-no-repeat bg-contain bg-center h-96 w-full"
+      >
+      </div>
+      <h3 className="mt-4 text-lg font-bold">Your Cart is Empty</h3>
+      <h4 className='text-center'>You can go to home page to view more restaurants</h4>
+      </div>
+    )}
     </>
-    
-    
   )
 }
 
