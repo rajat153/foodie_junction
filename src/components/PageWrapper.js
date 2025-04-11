@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import { ThemeContext } from '../contexts/ThemeContext';
+import Footer from './Footer';
 
 export default function PageWrapper(props) {
   const { isDarkMode } = useContext(ThemeContext);
@@ -8,5 +9,5 @@ export default function PageWrapper(props) {
     minHeight: "100vh",
     minWidth : "100vw"
   };
-  return <div style={styles}>{props.children}</div>;
+  return <div style={styles}>{props.children}<Footer/></div>;
 }

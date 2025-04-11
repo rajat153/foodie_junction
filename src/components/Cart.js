@@ -35,11 +35,10 @@ const Cart = () => {
             </div>
             );
         })
-
     }
     {cartItems.length !== 0  && <button className = "p-2 my-2 mx-auto block bg-orange-300 rounded-lg"onClick = {handleclearCart}>Clear cart</button>}
     {cartItems.length === 0 && (
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center min-h-screen'>
       <div
         className="bg-[url('https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0')] bg-no-repeat bg-contain bg-center h-96 w-full"
       >

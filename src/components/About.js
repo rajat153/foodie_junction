@@ -1,62 +1,37 @@
 import React from 'react'
-
-// Class Based Component
-
 class About extends React.Component{
 
   constructor (props) {
     super(props);
-
-    // this.state = {
-    //   profile :{name:""}
-      
-    // }
   }
-
-  state = {profile :{}, user_name :""}
-
-  // componentDidMount(){
-  //   this.getUserData()
-  // }
-
-
-  getUserData = async() =>{
-    const resp = await fetch( "https://api.github.com/users/" + this.state.user_name);
-    const data = await resp.json();
-    console.log(data)
-    this.setState({profile:data})
-  }
-
-  handleChange = (key) => (e, data) => {
-    this.setState({ [key]: e.target.value });
-   
-  }
-
-  handleClick = () => {
-    this.getUserData()
-  }
-
 
 
   render(){
-
-    const {name,location,avatar_url}  =  this.state.profile
-
     return (
       <>
-        <h1>Github User</h1>
-        <input type="text" onChange = {this.handleChange("user_name")} value={this.state.user_name} />
-        <button onClick={this.handleClick}>Search</button>
-        <div>
-          <img src={avatar_url} alt="" />
-          <h1>Name:{name}</h1>
-          <h2>Location: {location}</h2>
+        <div className="flex items-center justify-center min-h-screen px-4">
+          <div className="max-w-2xl text-center p-4 bg-white rounded-2xl shadow-md">
+            <h1 className="text-3xl font-bold mb-4 text-orange-500">🍽️ Foodie Junction</h1>
+            <p className="text-gray-700 text-lg mb-2">
+              Welcome to <strong>Foodie Junction</strong> — your one-stop destination to satisfy your cravings! 
+              Our platform allows users to browse a variety of restaurants, explore top-rated dishes, 
+              and order food straight to their doorstep with just a few clicks.
+            </p>
+            <p className="text-gray-700 text-lg mb-2">
+              With an intuitive UI and seamless navigation, Foodie Junction ensures a delightful food ordering experience.
+              You can filter by cuisine, ratings, or location — whatever suits your appetite!
+            </p>
+            <p className="text-gray-700 text-lg mb-4">
+              <strong>Upcoming Features:</strong> 
+              🔍 Location-based search, 💳 Secure payment integration, and 🎉 Real-time pop-up alerts for deals and order updates.
+              secure <strong>Login/Logout</strong> system, allowing users to save their preferences, view past orders, and enjoy a personalized experience. 
+            </p>
+            <p className="text-sm text-gray-400">Stay hungry, stay happy! 😋</p>
+          </div>
         </div>
       </>
     )
   }
-   
-  
 }
 
 export default About

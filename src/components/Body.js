@@ -4,7 +4,6 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { LocationContext } from "../contexts/LocationContext";
-import Footer from "./Footer";
 import Carousel from "./carousel";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -147,7 +146,6 @@ const Body = () => {
           </Link>
         ))}
       </div>
-      <Footer/>
     </main>
   );
 };

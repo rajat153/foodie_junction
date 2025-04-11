@@ -9,7 +9,7 @@ const RestrauntCard = (props) => {
         className="w-full h-40 rounded-2xl"
       />
       <h2 className="p-2">{props.name}</h2>
-      <span>⭐{props.avgRating}</span>
+      <span>⭐ {props.avgRating}</span>
       <h3 className="p-2 truncate">{props.cuisines?.join(",")}</h3>
       <h5 className="p-2">{props.areaName}</h5>
     </div>
